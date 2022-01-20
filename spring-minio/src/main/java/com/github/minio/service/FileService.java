@@ -3,6 +3,7 @@ package com.github.minio.service;
 import com.github.minio.config.MinioConfig;
 import com.github.minio.model.FileItem;
 import io.minio.*;
+import io.minio.errors.*;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
@@ -13,7 +14,10 @@ import org.springframework.util.StreamUtils;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +30,12 @@ public class FileService {
 
     @Autowired
     private MinioClient client;
+    
+    public GetObjectResponse getObject(String objectName) throws Exception {
+        final GetObjectArgs build = GetObjectArgs.builder().bucket(minioConfig.getBucketName()).object(objectName).build();
+        GetObjectResponse object = client.getObject(build);
+        return object;
+    }
     
     public List<FileItem> listObjects(String prefix) throws Exception {
         String bucketName = minioConfig.getBucketName();
@@ -66,6 +76,16 @@ public class FileService {
                 .bucket(bucketName)
                 .object(fileName)
                 .stream(new ByteArrayInputStream(bytes), bytes.length, -1)
+                .contentType(contentType)
+                .build();
+        client.putObject(args);
+    }
+
+    public void putObject(InputStream stream, String fileName, String contentType) throws Exception {
+        PutObjectArgs args = PutObjectArgs.builder()
+                .bucket(minioConfig.getBucketName())
+                .object(fileName)
+                .stream(stream, stream.available(), -1)
                 .contentType(contentType)
                 .build();
         client.putObject(args);
