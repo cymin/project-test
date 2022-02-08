@@ -8,7 +8,19 @@
   <sql id="Base_Column_List">
     id, username
   </sql>
-  <select id="selectByIds" resultMap="BaseResultMap" parameterType="arraylist">
+    
+    <insert id="save" parameterType="com.example.model.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `t_user`(`username`) VALUES (#{username})
+    </insert>
+    
+    <update id="update" parameterType="com.example.model.User">
+        UPDATE `t_user` SET `username` = #{username} WHERE `id` = #{id}
+    </update>
+    
+    <select id="selectByIds" resultMap="BaseResultMap" parameterType="arraylist">
       select
       <include refid="Base_Column_List" />
       from t_user
@@ -22,4 +34,5 @@
       </where>
 
   </select>
+    
 </mapper>
