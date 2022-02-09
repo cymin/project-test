@@ -32,3 +32,18 @@ logging:
   level:
     root: info
     com.github: debug
+    
+# 健康检查配置
+management:
+  endpoints:
+    web:
+      base-path: /monitor
+      exposure:
+        include: '*'
+    enabled-by-default: false
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    prometheus:
+      enabled: true
