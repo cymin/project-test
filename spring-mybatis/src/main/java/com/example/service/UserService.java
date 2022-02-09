@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.mapper.UserMapper;
 import com.example.model.User;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,12 @@ public class UserService {
     public void batch() throws Exception {
         // 自己注入自己，通过代理类调用saveUser，事务生效了
         userService.saveUser();
+    }
+    
+    public void batch1() throws Exception {
+        // 更优雅的调用事务方法，由于this关键字引用的并不是该Service Bean对象的代理对象，而是其本身，因此Spring AOP是不能拦截到这些被嵌套调用的方法的
+        // 通过代理类调用saveUser，需要设置exposeProxy = true，事务生效了
+        ((UserService ) AopContext.currentProxy()).saveUser();
     }
 
     public void batch2() throws Exception {
