@@ -1,0 +1,6 @@
+mvn clean 
+mvn package
+
+docker build -t spring-mybatis:1.0 .
+
+docker run -dp 9090:8080 --name spring-mybatis spring-mybatis:1.0
