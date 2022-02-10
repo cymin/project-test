@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @description:
  */
@@ -34,6 +36,12 @@ public class TestController {
     @RequestMapping("/test3")
     public String testTransactional3(String key, String value) {
         return testService.testTransactional3(key, value);
+    }
+    
+    // 不使用spring注解式事务，自己控制redis事务
+    @RequestMapping("/test4")
+    public List<Object> testTransactional4(String key, String value) {
+        return testService.testTransactional4(key, value);
     }
 
     @RequestMapping("/get")
