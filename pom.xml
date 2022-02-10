@@ -11,7 +11,7 @@
         <module>spring-mybatis</module>
         <module>spring-minio</module>
         <module>java-utils</module>
-        <module>springcloud-redis</module>
+        <module>spring-redis</module>
         <module>springcloud-shutdown</module>
     </modules>
     <name>project-test</name>
