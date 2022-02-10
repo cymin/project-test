@@ -11,8 +11,9 @@
         <module>spring-mybatis</module>
         <module>spring-minio</module>
         <module>java-utils</module>
+        <module>springcloud-shutdown</module>
     </modules>
-    <name>demo</name>
+    <name>project-test</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
