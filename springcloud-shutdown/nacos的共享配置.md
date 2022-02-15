@@ -1,15 +1,23 @@
+springcloud-shutdown-dev.yml
 ```yaml
-# 健康检查配置
+server:
+  port: 8085
+  shutdown: graceful
+  
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 50s
+
 management:
   endpoints:
     web:
-      base-path: /monitor
+      base-path: /actuator
       exposure:
-        include: '*'
-    enabled-by-default: false
+        include: service-registry,health,info,shutdown
+        # include: '*'
+    # enabled-by-default: false
   server:
     address: 127.0.0.1
-    port: 19999
   endpoint:
     health:
       show-details: always
@@ -17,6 +25,8 @@ management:
     shutdown:
       enabled: true
     prometheus:
+      enabled: true
+    info:
       enabled: true
 
 ```

@@ -8,7 +8,7 @@ import org.springframework.boot.context.ApplicationPidFileWriter;
 public class CloudShutdownApplication {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(CloudShutdownApplication.class);
-        // 指定一个文件，写入pid号
+        // 指定一个文件，写入pid号，在dockers容器内部，应用的pid默认为1
         application.addListeners(new ApplicationPidFileWriter("app.pid"));
         application.run(args);
     }

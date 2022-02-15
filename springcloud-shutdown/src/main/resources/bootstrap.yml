@@ -1,0 +1,22 @@
+# nacos配置必须放到bootstrap.yml文件中，放到application.yml中nacos在初始化的时候读取不到
+spring:
+  application:
+    name: 'springcloud-shutdown'
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: test
+      config:
+        # 配置中心地址
+        server-addr: localhost:8848
+        namespace: test
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs: 
+          - dataId: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  
+# 健康检查配置nacos配置列表中了，dataId=springcloud-shutdown-dev.yml
